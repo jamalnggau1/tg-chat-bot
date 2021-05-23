@@ -51,8 +51,6 @@ async def chat_message_handler(message: Message):
         "partner_id",
         "language",
     )
-    await asyncio.gather(spam_checker, message)
-    print(datetime.now())
     try:
         if message.reply_to_message:
             msgid = (
@@ -110,6 +108,7 @@ async def chat_message_handler(message: Message):
             )
         except:
             pass
+    await spam_checker(message)
 
 
 async def another_message_handler(message: Message):
