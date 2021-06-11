@@ -15,9 +15,8 @@ async def search_by_gender(message: Message, sex):
     sort = "ASC" if rating >= 0 else "DESC"
     text = texts.female_search if sex == "F" else texts.male_search
     await message.answer(
-        f"_{text[language][1]}_",
+        f"<i>{text[language][1]}</i>",
         reply_markup=await default.exit_btn(language),
-        parse_mode="Markdown",
     )
     while True:
         partner = await db.select(
@@ -51,14 +50,12 @@ async def search_by_gender(message: Message, sex):
             )
             await bot.send_message(
                 partner[0],
-                f"_{text[partner[8]][0]}_**",
+                f"<i>{text[partner[8]][0]}</i>",
                 reply_markup=ReplyKeyboardRemove(),
-                parse_mode="Markdown",
             )
             await message.answer(
-                f"_{text[language][0]}_**",
+                f"<i>{text[language][0]}</i>",
                 reply_markup=ReplyKeyboardRemove(),
-                parse_mode="Markdown",
             )
 
             return
@@ -78,9 +75,8 @@ async def search(message):
     sort = "ASC" if rating >= 0 else "DESC"
     text = texts.search
     await message.answer(
-        f"_{text[language][1]}_",
+        f"<i>{text[language][1]}</i>",
         reply_markup=await default.exit_btn(language),
-        parse_mode="Markdown",
     )
     while True:
         partner = await db.select(
@@ -114,14 +110,12 @@ async def search(message):
             )
             await bot.send_message(
                 partner[0],
-                f"_{text[partner[8]][0]}_",
+                f"<i>{text[partner[8]][0]}</i>",
                 reply_markup=ReplyKeyboardRemove(),
-                parse_mode="Markdown",
             )
             await message.answer(
-                f"_{text[language][0]}_**",
+                f"<i>{text[language][0]}</i>",
                 reply_markup=ReplyKeyboardRemove(),
-                parse_mode="Markdown",
             )
             return
         except:
@@ -129,7 +123,6 @@ async def search(message):
                 f'UPDATE main SET isSearching = "Y", isChatting = "N", isChattingByGender = "N" WHERE user_id = "{user_id}"',
             )
             await db.delete_user(partner[0])
-
 
 __all__ = [
     "search",

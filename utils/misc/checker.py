@@ -1,5 +1,4 @@
 from collections import Counter
-from datetime import datetime
 
 from aiogram.types import Message
 
@@ -13,7 +12,6 @@ spam = {}
 
 
 async def spam_checker(message: Message):
-    print(datetime.now())
     global msgcont, spam
     try:
         if len(msgcont[message.from_user.id]) == 5:

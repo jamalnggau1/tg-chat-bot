@@ -37,7 +37,7 @@ async def set_user_gender(query: CallbackQuery, state: FSMContext):
 async def report_handler(query: CallbackQuery):
     txt = ["Выберите причину:", "Choose a reason:"]
     language = await db.user_data(query.from_user.id, "language")
-    _, user_id = query.data.split("<i>")
+    _, user_id = query.data.split("_")
     await query.message.edit_text(
         f"<i>{txt[language]}</i>",
         reply_markup=await inline.complain1_btn(user_id, language),
@@ -47,7 +47,7 @@ async def report_handler(query: CallbackQuery):
 async def report_reason_handler(query: CallbackQuery, state: FSMContext):
     txt = ["Спасибо за отзыв!", "Thank you for your feedback!"]
     language = await db.user_data(query.from_user.id, "language")
-    reason, user_id = query.data.split("<i>")
+    reason, user_id = query.data.split("_")
     await query.message.edit_text(f"<i>{txt[language]}</i>")
     await db.update_rating(user_id, -1)
     msg_ids = ""
@@ -65,14 +65,14 @@ async def feedback_handler(query: CallbackQuery):
     keys = {"👎": -1, "👎": 1}
     txt = ["Спасибо за отзыв!", "Thank you for your feedback!"]
     language = await db.user_data(query.from_user.id, "language")
-    key, user_id = query.data.split("<i>")
+    key, user_id = query.data.split("_")
     await db.update_rating(user_id, keys[key])
     await query.message.edit_text(f"<i>{txt[language]}</i>")
 
 
 async def ban_handler(query: CallbackQuery):
     language = await db.user_data(query.from_user.id, "language")
-    _, reason, day, user_id, ids = query.data.split("<i>")
+    _, reason, day, user_id, ids = query.data.split("_")
     days = timedelta(int(day))
     now = datetime.now()
     date = now + days

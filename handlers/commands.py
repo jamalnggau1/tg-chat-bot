@@ -14,6 +14,8 @@ from utils.misc import chat
 
 async def start_command_handler(message: Message):
     row = await db.user_data(message.from_user.id)
+    if row[1] == 'Y' or row[2] == 'Y':
+         await db.stop_search(message.from_user.id)
     if row[4] != "Y":
         await message.reply(
             "Выберите язык/Choose language ", reply_markup=inline.lang_btn,
